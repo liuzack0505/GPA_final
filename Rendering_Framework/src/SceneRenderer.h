@@ -5,6 +5,9 @@
 #include "SceneManager.h"
 #include "DynamicSceneObject.h"
 #include "terrain\TerrainSceneObject.h"
+// chou add
+#include "airplane/AirplaneSceneObject.h"
+// chou add end
 
 
 class SceneRenderer
@@ -22,6 +25,9 @@ private:
 
 	std::vector<DynamicSceneObject*> m_dynamicSOs;
 	TerrainSceneObject* m_terrainSO = nullptr;
+	// chou add
+	AirplaneSceneObject* m_airplaneSO = nullptr;
+	// chou add end
 
 
 public:
@@ -33,6 +39,9 @@ public:
 	void setViewport(const int x, const int y, const int w, const int h);
 	void appendDynamicSceneObject(DynamicSceneObject *obj);
 	void appendTerrainSceneObject(TerrainSceneObject* tSO);
+	// chou add
+	void appendAirplaneSceneObject(AirplaneSceneObject* aSO);
+	// chou add end
 
 // pipeline
 public:

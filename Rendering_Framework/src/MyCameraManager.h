@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera\MyOrbitControl.h"
+#include "airplane/MyAirplane.h"
 
 enum class RenderWidgetKeyCode {
 	KEY_W, KEY_A, KEY_S, KEY_D, KEY_T, KEY_Z, KEY_X
@@ -81,6 +82,10 @@ private:
 
 	glm::ivec4 m_godViewport;
 	glm::ivec4 m_playerViewport;
+
+	// chou add
+	MyAirplane* m_airplane = nullptr;
+	// chou add end
 
 private:
 	bool m_WPressedFlag = false;

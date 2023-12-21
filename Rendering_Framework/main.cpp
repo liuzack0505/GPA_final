@@ -5,8 +5,15 @@
 
 #include "src\ViewFrustumSceneObject.h"
 #include "src\terrain\MyTerrain.h"
+// chou add
+#include "src\airplane\MyAirplane.h"
+// chou add end
 #include "src\MyCameraManager.h"
 
+// chou add
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+// chou add end
 
 #pragma comment (lib, "lib-vc2015\\glfw3.lib")
 #pragma comment(lib, "assimp-vc141-mt.lib")
@@ -40,6 +47,9 @@ ShaderProgram* defaultShaderProgram = new ShaderProgram();
 
 ViewFrustumSceneObject* m_viewFrustumSO = nullptr;
 MyTerrain* m_terrain = nullptr;
+// chou add
+MyAirplane* m_airplane = nullptr;
+// chou add end
 INANOA::MyCameraManager* m_myCameraManager = nullptr;
 // ==============================================
 
@@ -182,6 +192,13 @@ bool initializeGL(){
 	m_terrain = new MyTerrain();
 	m_terrain->init(-1); 
 	defaultRenderer->appendTerrainSceneObject(m_terrain->sceneObject());
+
+	// chou add
+	// initialize airplane
+	m_airplane = new MyAirplane();
+	m_airplane->init();
+	defaultRenderer->appendAirplaneSceneObject(m_airplane->sceneObject());
+	// chou add end
 	// =================================================================	
 	
 	resize(FRAME_WIDTH, FRAME_HEIGHT);

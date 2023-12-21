@@ -51,6 +51,9 @@ public:
 
 	int m_vs_commonProcess;
 	int m_vs_terrainProcess;	
+	// chou add
+	int m_vs_airplaneProcess;
+	// chou add end
 	
 	int m_fs_pureColor;	
 	int m_fs_terrainPass;

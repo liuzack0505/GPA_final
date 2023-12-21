@@ -31,6 +31,15 @@
     <Filter Include="Header Files\camera">
       <UniqueIdentifier>{0a4280f5-adfd-41fd-b6da-809606480899}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\airplane">
+      <UniqueIdentifier>{05e08616-c205-4f9c-a801-d9e31e31b00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shader">
+      <UniqueIdentifier>{05876ba2-700d-4d18-953e-208ff88fcd55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\airplane">
+      <UniqueIdentifier>{756ca655-ad8e-463b-89a1-6d0e5512bb69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +98,12 @@
     </ClCompile>
     <ClCompile Include="src\MyCameraManager.cpp">
       <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\airplane\MyAirplane.cpp">
+      <Filter>Source Files\airplane</Filter>
+    </ClCompile>
+    <ClCompile Include="src\airplane\AirplaneSceneObject.cpp">
+      <Filter>Source Files\airplane</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,5 +176,19 @@
     <ClInclude Include="src\camera\MyOrbitControl.h">
       <Filter>Header Files\camera</Filter>
     </ClInclude>
+    <ClInclude Include="src\airplane\AirplaneSceneObject.h">
+      <Filter>Header Files\airplane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\airplane\MyAirplane.h">
+      <Filter>Header Files\airplane</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shader\oglFragmentShader.glsl">
+      <Filter>Source Files\shader</Filter>
+    </None>
+    <None Include="src\shader\oglVertexShader.glsl">
+      <Filter>Source Files\shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
