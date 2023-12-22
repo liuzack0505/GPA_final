@@ -21,7 +21,7 @@ private:
 	glm::mat4 m_modelMat;
 
 public:
-	DynamicSceneObject(const int maxNumVertex, const int maxNumIndex, const bool normalFlag, const bool uvFlag);
+	DynamicSceneObject(const int maxNumVertex, const int maxNumIndex, const bool normalFlag, const bool uvFlag, const bool isDynamic);
 	virtual ~DynamicSceneObject();
 
 	void update();

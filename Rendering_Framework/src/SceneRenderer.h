@@ -5,6 +5,9 @@
 #include "SceneManager.h"
 #include "DynamicSceneObject.h"
 #include "terrain\TerrainSceneObject.h"
+// chou add
+#include "airplane/AirplaneSceneObject.h"
+// chou add end
 
 
 class SceneRenderer
@@ -33,6 +36,9 @@ public:
 	void setViewport(const int x, const int y, const int w, const int h);
 	void appendDynamicSceneObject(DynamicSceneObject *obj);
 	void appendTerrainSceneObject(TerrainSceneObject* tSO);
+	// chou add
+	//void appendAirplaneSceneObject(AirplaneSceneObject* aSO);
+	// chou add end
 
 // pipeline
 public:

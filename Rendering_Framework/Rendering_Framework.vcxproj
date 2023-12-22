@@ -27,12 +27,15 @@
     <ClCompile Include="..\externals\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\externals\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\airplane\AirplaneSceneObject.cpp" />
+    <ClCompile Include="src\airplane\MyAirplane.cpp" />
     <ClCompile Include="src\camera\MyCamera.cpp" />
     <ClCompile Include="src\camera\MyOrbitControl.cpp" />
     <ClCompile Include="src\DynamicSceneObject.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\MyCameraManager.cpp" />
     <ClCompile Include="src\MyImGuiPanel.cpp" />
+    <ClCompile Include="src\MyMagicRock.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\terrain\MyTerrain.cpp" />
@@ -49,11 +52,14 @@
     <ClInclude Include="..\externals\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\externals\include\imgui\imstb_textedit.h" />
     <ClInclude Include="..\externals\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\airplane\AirplaneSceneObject.h" />
+    <ClInclude Include="src\airplane\MyAirplane.h" />
     <ClInclude Include="src\camera\MyCamera.h" />
     <ClInclude Include="src\camera\MyOrbitControl.h" />
     <ClInclude Include="src\DynamicSceneObject.h" />
     <ClInclude Include="src\MyCameraManager.h" />
     <ClInclude Include="src\MyImGuiPanel.h" />
+    <ClInclude Include="src\MyMagicRock.h" />
     <ClInclude Include="src\MyPoissonSample.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\SceneRenderer.h" />
@@ -63,6 +69,10 @@
     <ClInclude Include="src\terrain\MyViewFrustum.h" />
     <ClInclude Include="src\terrain\TerrainSceneObject.h" />
     <ClInclude Include="src\ViewFrustumSceneObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shader\oglFragmentShader.glsl" />
+    <None Include="src\shader\oglVertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ADA5FF44-3FBE-44D5-94ED-FFD82E3DF373}</ProjectGuid>
