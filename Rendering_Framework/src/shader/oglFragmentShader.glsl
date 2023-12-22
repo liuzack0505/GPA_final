@@ -2,12 +2,19 @@
 
 in vec3 f_viewVertex ;
 in vec3 f_uv ;
+in vec3 L;
+in vec3 H;
+in vec3 N;
 
 layout (location = 0) out vec4 fragColor ;
 
 layout(location = 2) uniform int pixelProcessId;
 layout(location = 4) uniform sampler2D albedoTexture ;
+layout(location = 6) uniform sampler2D normalMap ;
 
+const vec3 la = vec3(0.2);
+const vec3 ld = vec3(0.64);
+const vec3 ls = vec3(0.16);
 
 vec4 withFog(vec4 color){
 	const vec4 FOG_COLOR = vec4(0.0, 0.0, 0.0, 1) ;
@@ -41,14 +48,34 @@ void pureColor(){
 void magicRockPass(){
 	vec4 texel = texture(albedoTexture, f_uv.xy);
 	vec4 shadedColor = withFog(texel);
-	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+
+	vec3 ka = shadedColor.xyz;
+	vec3 kd = ka;
+	vec3 ks = vec3(1.0);
+	float shiness = 32;
+
+	vec3 ambient = ka * la;
+	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
+	vec3 specular =  pow(max(dot(N, H), 0.0), shiness) * ks * ls;
+
+	fragColor.rgb = pow(ambient + diffuse + specular, vec3(0.5));
 	fragColor.a = shadedColor.a;
 }
 
 void airplanePass(){
 	vec4 texel = texture(albedoTexture, f_uv.xy);
 	vec4 shadedColor = withFog(texel);
-	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+
+	vec3 ka = shadedColor.xyz;
+	vec3 kd = ka;
+	vec3 ks = vec3(1.0);
+	float shiness = 32;
+
+	vec3 ambient = ka * la;
+	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
+	vec3 specular =  pow(max(dot(N, H), 0.0), shiness) * ks * ls;
+
+	fragColor.rgb = pow(ambient + diffuse + specular, vec3(0.5));
 	fragColor.a = shadedColor.a;
 }
 
