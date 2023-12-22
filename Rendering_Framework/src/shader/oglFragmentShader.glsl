@@ -26,16 +26,30 @@ vec4 withFog(vec4 color){
 
 void terrainPass(){
 	vec4 texel = texture(albedoTexture, f_uv.xy);
-	fragColor = withFog(texel); 
-	fragColor.a = 1.0;	
+	vec4 shadedColor = withFog(texel); 
+	shadedColor.a = 1.0;	
+	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.a = shadedColor.a;
 }
 
 void pureColor(){
-	fragColor = withFog(vec4(1.0, 0.0, 0.0, 1.0)) ;
+	vec4 shadedColor = withFog(vec4(1.0, 0.0, 0.0, 1.0)) ;
+	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.a = shadedColor.a;
 }
 
 void magicRockPass(){
-	fragColor = texture(albedoTexture, f_uv.xy);
+	vec4 texel = texture(albedoTexture, f_uv.xy);
+	vec4 shadedColor = withFog(texel);
+	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.a = shadedColor.a;
+}
+
+void airplanePass(){
+	vec4 texel = texture(albedoTexture, f_uv.xy);
+	vec4 shadedColor = withFog(texel);
+	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.a = shadedColor.a;
 }
 
 void main(){	
@@ -47,7 +61,11 @@ void main(){
 	}
 	else if(pixelProcessId == 1){
 		magicRockPass();
-	} else {
+	}
+	else if (pixelProcessId == 2) {
+		airplanePass();
+	}
+	else {
 		pureColor();
 	}
 }
