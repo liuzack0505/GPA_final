@@ -42,7 +42,6 @@ double cursorPos[2];
 
 bool showContextMenu = false;
 
-
 MyImGuiPanel* m_imguiPanel = nullptr;
 
 void vsyncDisabled(GLFWwindow *window);

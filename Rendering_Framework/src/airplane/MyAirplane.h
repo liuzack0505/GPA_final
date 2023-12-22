@@ -3,18 +3,6 @@
 #include "../DynamicSceneObject.h"
 #include "../MyCameraManager.h"
 
-#include <glm/gtc/type_ptr.hpp>
-#include <glm\gtx\quaternion.hpp>
-#include <glm\mat4x4.hpp>
-#include <glm\gtx\transform.hpp>
-#include <glad\glad.h>
-
-#include <stb_image.h>
-#include <assimp/cimport.h>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/Importer.hpp>
-
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -23,26 +11,6 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 #include "assimp/Importer.hpp"
-
-typedef struct {
-	int width;
-	int height;
-	unsigned char* data;
-} TextureData;
-
-typedef struct {
-	GLuint diffuse_tex;
-} Material;
-
-typedef struct {
-	GLuint vao;
-	GLuint vbo_position;
-	GLuint vbo_normal;
-	GLuint vbo_texcoord;
-	GLuint ibo;
-	int drawCount;
-	int materialID;
-} Shape;
 
 using namespace std;
 

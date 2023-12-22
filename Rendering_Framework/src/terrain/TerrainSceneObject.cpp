@@ -17,7 +17,6 @@ TerrainSceneObject::TerrainSceneObject(const int numChunk, const float* chunkVer
 	}
 }
 
-
 TerrainSceneObject::~TerrainSceneObject()
 {
 	for (int i = 0; i < this->m_numChunk; i++) {
