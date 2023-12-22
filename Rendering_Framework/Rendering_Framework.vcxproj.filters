@@ -105,6 +105,9 @@
     <ClCompile Include="src\airplane\AirplaneSceneObject.cpp">
       <Filter>Source Files\airplane</Filter>
     </ClCompile>
+    <ClCompile Include="src\MyMagicRock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\externals\include\imgui\imconfig.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="src\airplane\MyAirplane.h">
       <Filter>Header Files\airplane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyMagicRock.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ ViewFrustumSceneObject::ViewFrustumSceneObject(const int numCascade, const GLuin
 	}
 	
 	this->m_totalDataByte = MAX_NUM_VERTEX * 12;
-	this->m_dynamicSO = new DynamicSceneObject(MAX_NUM_VERTEX, MAX_NUM_INDEX, false, false);
+	this->m_dynamicSO = new DynamicSceneObject(MAX_NUM_VERTEX, MAX_NUM_INDEX, false, false, true);
 	
 
 	// initialize index

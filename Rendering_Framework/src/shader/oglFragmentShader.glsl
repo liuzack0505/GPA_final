@@ -25,13 +25,17 @@ vec4 withFog(vec4 color){
 
 
 void terrainPass(){
-	vec4 texel = texture(albedoTexture, f_uv.xy) ;
+	vec4 texel = texture(albedoTexture, f_uv.xy);
 	fragColor = withFog(texel); 
 	fragColor.a = 1.0;	
 }
 
 void pureColor(){
 	fragColor = withFog(vec4(1.0, 0.0, 0.0, 1.0)) ;
+}
+
+void magicRockPass(){
+	fragColor = texture(albedoTexture, f_uv.xy);
 }
 
 void main(){	
@@ -41,7 +45,9 @@ void main(){
 	else if(pixelProcessId == 7){
 		terrainPass() ;
 	}
-	else{
-		pureColor() ;
+	else if(pixelProcessId == 1){
+		magicRockPass();
+	} else {
+		pureColor();
 	}
 }

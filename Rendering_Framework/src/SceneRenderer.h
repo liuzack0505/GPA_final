@@ -25,9 +25,6 @@ private:
 
 	std::vector<DynamicSceneObject*> m_dynamicSOs;
 	TerrainSceneObject* m_terrainSO = nullptr;
-	// chou add
-	AirplaneSceneObject* m_airplaneSO = nullptr;
-	// chou add end
 
 
 public:
@@ -40,7 +37,7 @@ public:
 	void appendDynamicSceneObject(DynamicSceneObject *obj);
 	void appendTerrainSceneObject(TerrainSceneObject* tSO);
 	// chou add
-	void appendAirplaneSceneObject(AirplaneSceneObject* aSO);
+	//void appendAirplaneSceneObject(AirplaneSceneObject* aSO);
 	// chou add end
 
 // pipeline

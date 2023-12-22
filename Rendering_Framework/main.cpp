@@ -8,6 +8,7 @@
 // chou add
 #include "src\airplane\MyAirplane.h"
 // chou add end
+#include "src\MyMagicRock.h"
 #include "src\MyCameraManager.h"
 
 // chou add
@@ -50,6 +51,7 @@ MyTerrain* m_terrain = nullptr;
 // chou add
 MyAirplane* m_airplane = nullptr;
 // chou add end
+MyMagicRock* m_magicRock = nullptr;
 INANOA::MyCameraManager* m_myCameraManager = nullptr;
 // ==============================================
 
@@ -195,10 +197,15 @@ bool initializeGL(){
 
 	// chou add
 	// initialize airplane
-	m_airplane = new MyAirplane();
-	m_airplane->init();
-	defaultRenderer->appendAirplaneSceneObject(m_airplane->sceneObject());
+	//m_airplane = new MyAirplane();
+	//m_airplane->init();
+	//defaultRenderer->appendAirplaneSceneObject(m_airplane->sceneObject());
 	// chou add end
+	
+	// initial magic rock
+	m_magicRock = new MyMagicRock();
+	m_magicRock->Init();
+
 	// =================================================================	
 	
 	resize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -263,12 +270,15 @@ void paintGL(){
 	defaultRenderer->setView(playerVM);
 	defaultRenderer->setProjection(playerProjMat);
 	defaultRenderer->renderPass();
+	m_magicRock->render();
 
 	// rendering with god view
 	defaultRenderer->setViewport(godViewport[0], godViewport[1], godViewport[2], godViewport[3]);
 	defaultRenderer->setView(godVM);
 	defaultRenderer->setProjection(godProjMat);
 	defaultRenderer->renderPass();
+
+	m_magicRock->render();
 	// ===============================
 
 	ImGui::Begin("My name is window");

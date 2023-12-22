@@ -1,7 +1,7 @@
 #include "DynamicSceneObject.h"
 
 
-DynamicSceneObject::DynamicSceneObject(const int maxNumVertex, const int maxNumIndex, const bool normalFlag, const bool uvFlag)
+DynamicSceneObject::DynamicSceneObject(const int maxNumVertex, const int maxNumIndex, const bool normalFlag, const bool uvFlag, const bool isDynamic = true)
 {
 	// the data should be INTERLEAF format
 
@@ -23,12 +23,22 @@ DynamicSceneObject::DynamicSceneObject(const int maxNumVertex, const int maxNumI
 
 	// Create Geometry Data Buffer
 	glCreateBuffers(1, &(this->m_dataBufferHandle));
-	glNamedBufferData(this->m_dataBufferHandle, totalBufferDataByte, this->m_dataBuffer, GL_DYNAMIC_DRAW);
+	if (isDynamic) {
+		glNamedBufferData(this->m_dataBufferHandle, totalBufferDataByte, this->m_dataBuffer, GL_DYNAMIC_DRAW);
+	}
+	else {
+		glNamedBufferData(this->m_dataBufferHandle, totalBufferDataByte, this->m_dataBuffer, GL_STATIC_DRAW);
+	}
 
 	// Create Indices Buffer
 	glCreateBuffers(1, &m_indexBufferHandle);
-	glNamedBufferData(m_indexBufferHandle, maxNumIndex * 4, this->m_indexBuffer, GL_DYNAMIC_DRAW);
-
+	if (isDynamic){
+		glNamedBufferData(m_indexBufferHandle, maxNumIndex * 4, this->m_indexBuffer, GL_DYNAMIC_DRAW);
+	}
+	else {
+		glNamedBufferData(m_indexBufferHandle, maxNumIndex * 4, this->m_indexBuffer, GL_STATIC_DRAW);
+	}
+	
 	// create vao
 	glGenVertexArrays(1, &(this->m_vao));
 	glBindVertexArray(this->m_vao);

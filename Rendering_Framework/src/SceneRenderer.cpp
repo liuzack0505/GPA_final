@@ -34,12 +34,11 @@ void SceneRenderer::renderPass(){
 			obj->update();
 		}
 	}
-
 	// chou add
-	if (this->m_airplaneSO != nullptr) {
-		glUniform1i(SceneManager::Instance()->m_vs_vertexProcessIdHandle, SceneManager::Instance()->m_vs_commonProcess);
-		this->m_airplaneSO->update();
-	}
+	//if (this->m_airplaneSO != nullptr) {
+	//	glUniform1i(SceneManager::Instance()->m_vs_vertexProcessIdHandle, SceneManager::Instance()->m_vs_commonProcess);
+		//this->m_airplaneSO->update();
+	//}
 	// chou add end
 	
 }
@@ -79,9 +78,9 @@ void SceneRenderer::appendTerrainSceneObject(TerrainSceneObject* tSO) {
 	this->m_terrainSO = tSO;
 }
 // chou add
-void SceneRenderer::appendAirplaneSceneObject(AirplaneSceneObject* aSO) {
-	this->m_airplaneSO = aSO;
-}
+//void SceneRenderer::appendAirplaneSceneObject(AirplaneSceneObject* aSO) {
+//	this->m_airplaneSO = aSO;
+//}
 // chou add end
 void SceneRenderer::clear(const glm::vec4 &clearColor, const float depth){
 	static const float COLOR[] = { 0.0, 0.0, 0.0, 1.0 };
