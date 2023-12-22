@@ -1,6 +1,7 @@
 #pragma once
 
-#include "AirplaneSceneObject.h"
+#include "../DynamicSceneObject.h"
+#include "../MyCameraManager.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm\gtx\quaternion.hpp>
@@ -15,7 +16,13 @@
 #include <assimp/Importer.hpp>
 
 #include <iostream>
+#include <cstring>
 #include <vector>
+#include "stb_image.h"
+#include "assimp/cimport.h"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+#include "assimp/Importer.hpp"
 
 typedef struct {
 	int width;
@@ -45,41 +52,25 @@ public:
 	MyAirplane();
 	virtual ~MyAirplane();
 
-public:
-	void init();
-	void render();
-	TextureData loadImage(string path);
-	void setupAirplaneSceneObject();
+	void Init(INANOA::MyCameraManager* mcm);
+	void loadTexture(const string& path, GLuint& handle);
+	DynamicSceneObject* sceneObject() const;
 
 public:
 	//void updateState(const glm::mat4& viewMat, const glm::vec3& viewOrg, const glm::mat4& projMat, const glm::vec4* frustumPlaneEquations);
 
 public:
-	//TerrainSceneObject* sceneObject();
-	AirplaneSceneObject* sceneObject();
-public:
-	//const glm::mat4 worldVtoElevationUVMat() const;
-	//const MyTerrainData* terrainData() const;
+	void updateDataBuffer();
+	void updateState(const glm::mat4& viewMat, const glm::vec3& viewPos);
+	void render();
+	void getModelMatFromCameraManager(INANOA::MyCameraManager* mcm);
 
 private:
-	//TerrainSceneObject* m_terrainSO = nullptr;
-	//MyTerrainData* m_terrainData = nullptr;
-
-
-	//glm::mat4 m_worldVtoElevationUVMat;
-
-	vector<Material> airplaneMaterails;
-	vector<Shape> airplaneShapes;
-	Assimp::Importer airplaneImporter;
-
-	GLuint m_vaoHandle_ = 0u;
-	GLuint m_vertexBufferHandle_vertex_ = 0u;
-	GLuint m_vertexBufferHandle_texcoord_ = 0u;
-	GLuint m_vertexBufferHandle_normal_ = 0u;
-	GLuint m_iboHandle_ = 0u;
-	int airplaneDrawCount_ = 0;
-
-	AirplaneSceneObject* m_airplaneSO = nullptr;
-	
+	DynamicSceneObject* m_dynamicSO;
+	int m_totalDataByte;
+	GLuint albedo_handle;
+	GLuint normal_handle;
+	INANOA::MyCameraManager* MCM = nullptr;
+	glm::mat4 modelMat;
 };
 

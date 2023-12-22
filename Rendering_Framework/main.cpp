@@ -16,6 +16,10 @@
 #include <stb_image.h>
 // chou add end
 
+#include <iostream>
+
+using namespace std;
+
 #pragma comment (lib, "lib-vc2015\\glfw3.lib")
 #pragma comment(lib, "assimp-vc141-mt.lib")
 
@@ -36,6 +40,7 @@ bool m_leftButtonPressed = false;
 bool m_rightButtonPressed = false;
 double cursorPos[2];
 
+bool showContextMenu = false;
 
 
 MyImGuiPanel* m_imguiPanel = nullptr;
@@ -197,9 +202,8 @@ bool initializeGL(){
 
 	// chou add
 	// initialize airplane
-	//m_airplane = new MyAirplane();
-	//m_airplane->init();
-	//defaultRenderer->appendAirplaneSceneObject(m_airplane->sceneObject());
+	m_airplane = new MyAirplane();
+	m_airplane->Init(m_myCameraManager);
 	// chou add end
 	
 	// initial magic rock
@@ -271,6 +275,7 @@ void paintGL(){
 	defaultRenderer->setProjection(playerProjMat);
 	defaultRenderer->renderPass();
 	m_magicRock->render();
+	m_airplane->render();
 
 	// rendering with god view
 	defaultRenderer->setViewport(godViewport[0], godViewport[1], godViewport[2], godViewport[3]);
@@ -279,7 +284,27 @@ void paintGL(){
 	defaultRenderer->renderPass();
 
 	m_magicRock->render();
+	m_airplane->render();
 	// ===============================
+
+	if (showContextMenu) {
+		ImGui::OpenPopup("Teleport");
+		showContextMenu = false;
+	}
+
+	if (ImGui::BeginPopup("Teleport")) {
+		if (ImGui::MenuItem("Teleport 0")) {
+			m_myCameraManager->teleport(0);
+		}
+		if (ImGui::MenuItem("Teleport 1")) {
+			m_myCameraManager->teleport(1);
+		}
+		if (ImGui::MenuItem("Teleport 2")) {
+			m_myCameraManager->teleport(2);
+		}
+
+		ImGui::EndPopup();
+	}
 
 	ImGui::Begin("My name is window");
 	m_imguiPanel->update();
@@ -299,9 +324,11 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods){
 	}
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 		m_myCameraManager->mousePress(RenderWidgetMouseButton::M_RIGHT, cursorPos[0], cursorPos[1]);
+		showContextMenu = true;
 	}
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
 		m_myCameraManager->mouseRelease(RenderWidgetMouseButton::M_RIGHT, cursorPos[0], cursorPos[1]);
+		//showContextMenu = false;
 	}
 }
 void cursorPosCallback(GLFWwindow* window, double x, double y){
