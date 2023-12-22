@@ -78,6 +78,7 @@ void MyMagicRock::loadTexture(const string &path, GLuint &handle) {
 	int height;
 	int n;
 	unsigned char* texture_data;
+	stbi_set_flip_vertically_on_load(true); // verticalmirror image data
 	stbi_uc* data = stbi_load(path.c_str(), &width, &height, &n, 4);
 	int data_size = width * height * 4;
 	if (data != NULL)
