@@ -51,6 +51,8 @@ void TerrainSceneObject::update() {
 	glActiveTexture(SceneManager::Instance()->m_albedoTexUnit);
 	glBindTexture(GL_TEXTURE_2D, this->m_albedoMapHandle);
 
+	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
 	glUniformMatrix4fv(SceneManager::Instance()->m_terrainVToUVMatHandle, 1, false, glm::value_ptr(this->m_worldVertexToElevationMapUvMat));
 
 	glUniform1i(SceneManager::Instance()->m_fs_pixelProcessIdHandle, SceneManager::Instance()->m_fs_terrainPass);

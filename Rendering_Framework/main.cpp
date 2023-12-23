@@ -5,10 +5,9 @@
 
 #include "src\ViewFrustumSceneObject.h"
 #include "src\terrain\MyTerrain.h"
-// chou add
 #include "src\airplane\MyAirplane.h"
-// chou add end
 #include "src\MyMagicRock.h"
+#include "src\MyFoliages.h"
 #include "src\MyCameraManager.h"
 
 // chou add
@@ -52,10 +51,9 @@ ShaderProgram* defaultShaderProgram = new ShaderProgram();
 
 ViewFrustumSceneObject* m_viewFrustumSO = nullptr;
 MyTerrain* m_terrain = nullptr;
-// chou add
 MyAirplane* m_airplane = nullptr;
-// chou add end
 MyMagicRock* m_magicRock = nullptr;
+MyFoliages* m_foliages = nullptr;
 INANOA::MyCameraManager* m_myCameraManager = nullptr;
 // ==============================================
 
@@ -108,7 +106,7 @@ int main(){
 	ImGui_ImplOpenGL3_Init("#version 430");
 
 	// disable vsync
-	//glfwSwapInterval(0);
+	glfwSwapInterval(0);
 
 	// start game-loop
 	vsyncDisabled(window);
@@ -199,16 +197,17 @@ bool initializeGL(){
 	m_terrain->init(-1); 
 	defaultRenderer->appendTerrainSceneObject(m_terrain->sceneObject());
 
-	// chou add
 	// initialize airplane
 	m_airplane = new MyAirplane();
 	m_airplane->Init(m_myCameraManager);
-	// chou add end
 	
-	// initial magic rock
+	// initialiize magic rock
 	m_magicRock = new MyMagicRock();
 	m_magicRock->Init();
 
+	// initialize foliages
+	m_foliages = new MyFoliages();
+	m_foliages->init();
 	// =================================================================	
 	
 	resize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -257,7 +256,12 @@ void paintGL(){
 	// update geography
 	m_terrain->updateState(playerVM, playerViewOrg, playerProjMat, nullptr);
 	// =============================================
-		
+	// reset foliages' draw command
+	m_foliages->resetShader();
+
+	//culling the instances
+	m_foliages->computeShader(playerVM, playerProjMat);
+
 	// =============================================
 	// start rendering
 	ImGui_ImplOpenGL3_NewFrame();
@@ -266,7 +270,7 @@ void paintGL(){
 	
 	// start new frame
 	defaultRenderer->setViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-	defaultRenderer->startNewFrame();
+	defaultRenderer->startNewFrame(); //use normal shader
 
 	// rendering with player view		
 	defaultRenderer->setViewport(playerViewport[0], playerViewport[1], playerViewport[2], playerViewport[3]);
@@ -275,6 +279,7 @@ void paintGL(){
 	defaultRenderer->renderPass();
 	m_magicRock->render();
 	m_airplane->render();
+	m_foliages->render();
 
 	// rendering with god view
 	defaultRenderer->setViewport(godViewport[0], godViewport[1], godViewport[2], godViewport[3]);
@@ -284,6 +289,7 @@ void paintGL(){
 
 	m_magicRock->render();
 	m_airplane->render();
+	m_foliages->render();
 	// ===============================
 
 	if (showContextMenu) {
