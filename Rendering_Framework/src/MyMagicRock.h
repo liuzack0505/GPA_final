@@ -27,7 +27,7 @@ public:
 public:
 	void updateDataBuffer();
 	void updateState(const glm::mat4 &viewMat, const glm::vec3 &viewPos);
-	void render();
+	void render(int nm);
 private:
 	DynamicSceneObject *m_dynamicSO;
 	int m_totalDataByte;

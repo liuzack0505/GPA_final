@@ -19,6 +19,45 @@ void MyImGuiPanel::update() {
 	ImGui::TextColored(ImVec4(0, 220, 0, 255), FPS_STR.c_str());
 	const std::string FT_STR = "Frame: " + std::to_string(this->m_avgFrameTime);
 	ImGui::TextColored(ImVec4(0, 220, 0, 255), FT_STR.c_str());
+
+	if (ImGui::Button("Teleport 0")) {
+		this->m_button0Pressed = true;
+	}
+	else {
+		this->m_button0Pressed = false;
+	}
+
+	if (ImGui::Button("Teleport 1")) {
+		this->m_button1Pressed = true;
+	}
+	else {
+		this->m_button1Pressed = false;
+	}
+
+	if (ImGui::Button("Teleport 2")) {
+		this->m_button2Pressed = true;
+	}
+	else {
+		this->m_button2Pressed = false;
+	}
+
+	ImGui::Checkbox("Normal Mapping", &m_normalMappingCheckBox);
+}
+
+bool MyImGuiPanel::isButton0Pressed() {
+	return this->m_button0Pressed;
+}
+
+bool MyImGuiPanel::isButton1Pressed() {
+	return this->m_button1Pressed;
+}
+
+bool MyImGuiPanel::isButton2Pressed() {
+	return this->m_button2Pressed;
+}
+
+bool MyImGuiPanel::isNormalMapping() {
+	return this->m_normalMappingCheckBox;
 }
 
 void MyImGuiPanel::setAvgFPS(const double avgFPS){

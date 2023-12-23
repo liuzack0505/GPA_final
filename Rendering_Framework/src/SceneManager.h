@@ -54,5 +54,9 @@ public:
 	
 	int m_fs_pureColor;	
 	int m_fs_terrainPass;
+
+	// chou add
+	GLuint m_magicRockNormalMapping;
+	// chou add end
 };
 

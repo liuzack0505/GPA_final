@@ -26,7 +26,8 @@ void commonProcess(){
 	vec4 viewVertex = viewMat * worldVertex ;
 	vec4 viewNormal = viewMat * worldNormal ;
 
-	L = (viewMat * modelMat * vec4(0.4, 0.5, 0.8, 0.0)).xyz;
+	//L = (viewMat * modelMat * vec4(0.4, 0.5, 0.8, 0.0)).xyz;
+	L = vec3(0.4, 0.5, 0.8);
 	L = normalize(L);
 	N = normalize(viewNormal.xyz);
 	vec3 V = -viewVertex.xyz;

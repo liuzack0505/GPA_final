@@ -133,6 +133,10 @@ bool SceneRenderer::setUpShader(){
 	manager->m_fs_pixelProcessIdHandle = 2;
 	manager->m_fs_pureColor = 5;
 	manager->m_fs_terrainPass = 7;
+
+	// chou add
+	manager->m_magicRockNormalMapping = 10;
+	// chou add end
 	
 	return true;
 }
