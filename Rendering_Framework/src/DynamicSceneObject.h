@@ -20,6 +20,10 @@ private:
 
 	glm::mat4 m_modelMat;
 
+	// chou add
+	int m_normalMapping;
+	// chou add end
+
 public:
 	DynamicSceneObject(const int maxNumVertex, const int maxNumIndex, const bool normalFlag, const bool uvFlag, const bool isDynamic);
 	virtual ~DynamicSceneObject();
@@ -35,5 +39,9 @@ public:
 	void setPixelFunctionId(const int functionId);
 	void setPrimitive(const GLenum primitive);
 	void setModelMat(const glm::mat4& modelMat);
+
+	// chou add 
+	void setNormalMapping(const int nm);
+	// chou add end
 };
 

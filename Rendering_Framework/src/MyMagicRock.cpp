@@ -70,6 +70,7 @@ void MyMagicRock::Init() {
 	this->m_dynamicSO->setPrimitive(GL_TRIANGLES);
 	this->m_dynamicSO->setModelMat(glm::translate(glm::vec3(25.92, 18.27, 11.75)));
 	this->m_dynamicSO->setPixelFunctionId(1);
+	//this->m_dynamicSO->setNormalMapping(1);
 }
 
 void MyMagicRock::loadTexture(const string &path, GLuint &handle) {
@@ -127,13 +128,14 @@ void MyMagicRock::updateState(const glm::mat4 &viewMat, const glm::vec3 &viewPos
 	this->m_dynamicSO->setModelMat(tMat * rMat);
 }
 
-void MyMagicRock::render() {
+void MyMagicRock::render(int nm) {
 	glActiveTexture(SceneManager::Instance()->m_normalTexUnit);
 	glBindTexture(GL_TEXTURE_2D, this->normal_handle);
 	glActiveTexture(SceneManager::Instance()->m_albedoTexUnit);
 	glBindTexture(GL_TEXTURE_2D, this->albedo_handle);
 	glActiveTexture(SceneManager::Instance()->m_elevationTexUnit);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	this->m_dynamicSO->setNormalMapping(nm);
 	this->m_dynamicSO->update();
 }
 

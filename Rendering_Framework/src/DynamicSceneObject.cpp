@@ -75,6 +75,7 @@ void DynamicSceneObject::update() {
 	glUniformMatrix4fv(SceneManager::Instance()->m_modelMatHandle, 1, false, glm::value_ptr(this->m_modelMat));
 
 	glUniform1i(SceneManager::Instance()->m_fs_pixelProcessIdHandle, this->m_pixelFunctionId);
+	glUniform1i(SceneManager::Instance()->m_magicRockNormalMapping, this->m_normalMapping);
 	glDrawElements(this->m_primitive, this->m_indexCount, GL_UNSIGNED_INT, nullptr);
 }
 
@@ -98,4 +99,7 @@ void DynamicSceneObject::setPrimitive(const GLenum primitive) {
 }
 void DynamicSceneObject::setModelMat(const glm::mat4& modelMat){
 	this->m_modelMat = modelMat;
+}
+void DynamicSceneObject::setNormalMapping(const int nm) {
+	this->m_normalMapping = nm;
 }

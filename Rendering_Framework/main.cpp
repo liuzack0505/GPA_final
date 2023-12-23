@@ -42,6 +42,8 @@ double cursorPos[2];
 
 bool showContextMenu = false;
 
+bool magicRockNormalMapping = false;
+
 MyImGuiPanel* m_imguiPanel = nullptr;
 
 void vsyncDisabled(GLFWwindow *window);
@@ -273,7 +275,7 @@ void paintGL(){
 	defaultRenderer->setView(playerVM);
 	defaultRenderer->setProjection(playerProjMat);
 	defaultRenderer->renderPass();
-	m_magicRock->render();
+	m_magicRock->render(magicRockNormalMapping);
 	m_airplane->render();
 
 	// rendering with god view
@@ -281,8 +283,7 @@ void paintGL(){
 	defaultRenderer->setView(godVM);
 	defaultRenderer->setProjection(godProjMat);
 	defaultRenderer->renderPass();
-
-	m_magicRock->render();
+	m_magicRock->render(magicRockNormalMapping);
 	m_airplane->render();
 	// ===============================
 
@@ -307,6 +308,21 @@ void paintGL(){
 
 	ImGui::Begin("My name is window");
 	m_imguiPanel->update();
+	if (m_imguiPanel->isButton0Pressed()) {
+		m_myCameraManager->teleport(0);
+	}
+	if (m_imguiPanel->isButton1Pressed()) {
+		m_myCameraManager->teleport(1);
+	}
+	if (m_imguiPanel->isButton2Pressed()) {
+		m_myCameraManager->teleport(2);
+	}
+	if (m_imguiPanel->isNormalMapping()) {
+		magicRockNormalMapping = 1;
+	}
+	else {
+		magicRockNormalMapping = 0;
+	}
 	ImGui::End();
 
 	ImGui::Render();
@@ -323,7 +339,7 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods){
 	}
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 		m_myCameraManager->mousePress(RenderWidgetMouseButton::M_RIGHT, cursorPos[0], cursorPos[1]);
-		showContextMenu = true;
+		showContextMenu = false;
 	}
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
 		m_myCameraManager->mouseRelease(RenderWidgetMouseButton::M_RIGHT, cursorPos[0], cursorPos[1]);
