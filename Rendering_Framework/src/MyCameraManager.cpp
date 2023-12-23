@@ -24,7 +24,7 @@ void MyCameraManager::init(const int w, const int h){
 }
 void MyCameraManager::resize(const int w, const int h){
 	// half for god view, half for player view
-	const float PLAYER_PROJ_FAR = 700.0;
+	const float PLAYER_PROJ_FAR = 400.0;
 	this->setupViewports(w, h);
 
 	this->m_godProjMat = glm::perspective(glm::radians(80.0f), this->m_godViewport[2] * 1.0f / h, 0.1f, 1000.0f);

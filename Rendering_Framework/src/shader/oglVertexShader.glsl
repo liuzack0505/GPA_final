@@ -3,6 +3,7 @@
 layout(location=0) in vec3 v_vertex;
 layout(location=1) in vec3 v_normal ;
 layout(location=2) in vec3 v_uv ;
+layout(location=3) in vec4 v_worldPosOffset; // only use in foliageProcess
 
 out vec3 f_viewVertex ;
 out vec3 f_uv ;
@@ -18,10 +19,34 @@ layout(location = 8) uniform mat4 projMat ;
 layout(location = 9) uniform mat4 terrainVToUVMat;
 layout(location = 1) uniform int vertexProcessIdx ;
 
+layout (std430, binding=4) buffer RotationData{
+	mat4 rotationData[] ;
+};
 
 void commonProcess(){
 	vec4 worldVertex = modelMat * vec4(v_vertex, 1.0) ;
 	vec4 worldNormal = modelMat * vec4(v_normal, 0.0) ;
+
+	vec4 viewVertex = viewMat * worldVertex ;
+	vec4 viewNormal = viewMat * worldNormal ;
+
+	//L = (viewMat * modelMat * vec4(0.4, 0.5, 0.8, 0.0)).xyz;
+	L = vec3(0.4, 0.5, 0.8);
+	L = normalize(L);
+	N = normalize(viewNormal.xyz);
+	vec3 V = -viewVertex.xyz;
+	H = normalize(L + V);
+
+	f_viewVertex = viewVertex.xyz;
+	f_uv = v_uv ;
+
+	gl_Position = projMat * viewVertex ;
+}
+
+void foliagesProcess(){
+	mat4 rotationMat = rotationData[uint(v_worldPosOffset.a)];
+	vec4 worldVertex = rotationMat * modelMat * vec4(v_vertex, 1.0) + vec4(v_worldPosOffset.xyz, 0.0);
+	vec4 worldNormal = rotationMat * modelMat * vec4(v_normal, 0.0) ;
 
 	vec4 viewVertex = viewMat * worldVertex ;
 	vec4 viewNormal = viewMat * worldNormal ;
@@ -65,6 +90,9 @@ void terrainProcess(){
 void main(){
 	if(vertexProcessIdx == 0){
 		commonProcess() ;
+	}
+	else if(vertexProcessIdx == 1){
+		foliagesProcess();
 	}
 	else if(vertexProcessIdx == 3){
 		terrainProcess() ;
