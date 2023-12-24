@@ -108,6 +108,9 @@
     <ClCompile Include="src\MyMagicRock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gbo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\externals\include\imgui\imconfig.h">
@@ -188,12 +191,21 @@
     <ClInclude Include="src\MyMagicRock.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gbo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shader\oglFragmentShader.glsl">
       <Filter>Source Files\shader</Filter>
     </None>
     <None Include="src\shader\oglVertexShader.glsl">
+      <Filter>Source Files\shader</Filter>
+    </None>
+    <None Include="src\shader\oglFragmentShader2.glsl">
+      <Filter>Source Files\shader</Filter>
+    </None>
+    <None Include="src\shader\oglVertexShader2.glsl">
       <Filter>Source Files\shader</Filter>
     </None>
   </ItemGroup>

@@ -77,10 +77,10 @@ void SceneRenderer::appendDynamicSceneObject(DynamicSceneObject *obj){
 void SceneRenderer::appendTerrainSceneObject(TerrainSceneObject* tSO) {
 	this->m_terrainSO = tSO;
 }
-// chou add
-//void SceneRenderer::appendAirplaneSceneObject(AirplaneSceneObject* aSO) {
-//	this->m_airplaneSO = aSO;
-//}
+// chou add 
+void SceneRenderer::renderGBufferPass() {
+
+}
 // chou add end
 void SceneRenderer::clear(const glm::vec4 &clearColor, const float depth){
 	static const float COLOR[] = { 0.0, 0.0, 0.0, 1.0 };

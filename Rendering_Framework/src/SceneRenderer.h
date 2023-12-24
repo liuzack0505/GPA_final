@@ -36,8 +36,9 @@ public:
 	void setViewport(const int x, const int y, const int w, const int h);
 	void appendDynamicSceneObject(DynamicSceneObject *obj);
 	void appendTerrainSceneObject(TerrainSceneObject* tSO);
+	
 	// chou add
-	//void appendAirplaneSceneObject(AirplaneSceneObject* aSO);
+	void renderGBufferPass();
 	// chou add end
 
 // pipeline
