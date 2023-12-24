@@ -274,13 +274,13 @@ void paintGL(){
 
 	// =============================================
 	// start rendering
+
+	glEnable(GL_DEPTH_TEST);
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	if (deferMode != 0) {
-		m_gbo->bindWrite();
-		m_gbo->bindDrawBuffer();
-	}
+	m_gbo->bindWrite();
+	m_gbo->bindDrawBuffer();
 	
 	// start new frame
 	
@@ -305,15 +305,14 @@ void paintGL(){
 	m_airplane->render();
 	m_foliages->render();
 
-	if (deferMode != 0) {
-		glViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-		m_gbo->unbind();
-		m_gbo->use();
-		glUniform1i(11, deferMode);
-		m_gbo->bindTexture();
-		glBindVertexArray(m_gbo->vao);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	}
+	glViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+	m_gbo->unbind();
+	m_gbo->use();
+	glUniform1i(11, deferMode);
+	m_gbo->bindTexture();
+	glBindVertexArray(m_gbo->vao);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
 	
 	// ===============================
 

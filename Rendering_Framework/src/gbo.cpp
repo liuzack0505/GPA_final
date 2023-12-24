@@ -40,7 +40,7 @@ void GBO::init(int w, int h) {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1 + i, this->texture[i], 0);
+			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, this->texture[i], 0);
 		}
 		else {
 			glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, w, h);
@@ -63,7 +63,7 @@ void GBO::init(int w, int h) {
 	const int NUM_ATTACHMENTS = GBO_NUM_TEXTURES - 1;
 	GLenum attachments[NUM_ATTACHMENTS] = {};
 	for (int i = 0; i < NUM_ATTACHMENTS; i++) {
-		attachments[i] = GL_COLOR_ATTACHMENT1 + i;
+		attachments[i] = GL_COLOR_ATTACHMENT0 + i;
 	}
 	glDrawBuffers(NUM_ATTACHMENTS, attachments);
 
@@ -132,7 +132,7 @@ GLuint GBO::getTexture(GBOTextureType texType) {
 }
 
 void GBO::setReadBuffer(GBOTextureType texType) {
-	glReadBuffer(GL_COLOR_ATTACHMENT1 + static_cast<int>(texType));
+	glReadBuffer(GL_COLOR_ATTACHMENT0 + static_cast<int>(texType));
 }
 
 void GBO::release() {
@@ -155,17 +155,16 @@ void GBO::use() {
 
 void GBO::bindTexture() {
 	glDisable(GL_DEPTH_TEST);
-	for (int i = 0; i < GBO_NUM_TEXTURES; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
+	for (int i = 0; i < GBO_NUM_TEXTURES - 1; i++) {
+		glActiveTexture(GL_TEXTURE1 + i);
 		glBindTexture(GL_TEXTURE_2D, this->texture[i]);
-		//glUniform1i(uniforms.deferred.position_map, i);
 	}
 }
 
 void GBO::bindDrawBuffer() {
-	GLenum attachments[5] = {};
-	for (int i = 0; i < 5; i++) {
-		attachments[i] = GL_COLOR_ATTACHMENT1 + i;
+	GLenum attachments[6] = {};
+	for (int i = 0; i < 6; i++) {
+		attachments[i] = GL_COLOR_ATTACHMENT0 + i;
 	}
-	glDrawBuffers(5, attachments);
+	glDrawBuffers(6, attachments);
 }
