@@ -32,9 +32,10 @@ void main()
 	float attenuation = 50.0 / (pow(dist, 2.0) + 1.0);
 	vec3 diffuse = max(dot(gNormal, L), 0.0) * gDiffuse * ld;
 	vec3 specular =  pow(max(dot(gNormal, H), 0.0), 32) * gSpecular * ls;
-	result += vec4(( diffuse+ specular) * attenuation, 0.0);
-	
+	//result += vec4((ambient + diffuse + specular) * attenuation, 0.0);
+	fragColor.rgb = pow((ambient + diffuse + specular), vec3(0.5));
+	//fragColor.a = shadedColor.a;
 
 	//fragColor = vec4(1.0, 0.0, 0.0, 1.0);
-	fragColor = result;
+	//fragColor = result;
 }

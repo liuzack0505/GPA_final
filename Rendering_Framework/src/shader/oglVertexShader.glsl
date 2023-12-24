@@ -42,8 +42,10 @@ void commonProcess(){
 	f_viewVertex = viewVertex.xyz;
 	f_uv = v_uv ;
 
-	world_vertex = worldVertex.xyz;
-	world_normal = worldNormal.xyz;
+	//world_vertex = worldVertex.xyz;
+	//world_normal = worldNormal.xyz
+	world_vertex = normalize(worldVertex.xyz) * 0.5 + 0.5;
+	world_normal = normalize(worldNormal.xyz) * 0.5 + 0.5;
 
 	gl_Position = projMat * viewVertex ;
 }
@@ -66,8 +68,10 @@ void foliagesProcess(){
 	f_viewVertex = viewVertex.xyz;
 	f_uv = v_uv ;
 
-	world_vertex = worldVertex.xyz;
-	world_normal = worldNormal.xyz;
+	//world_vertex = worldVertex.xyz;
+	//world_normal = worldNormal.xyz;
+	world_vertex = normalize(worldVertex.xyz) * 0.5 + 0.5;
+	world_normal = normalize(worldNormal.xyz) * 0.5 + 0.5;
 
 	gl_Position = projMat * viewVertex ;
 }
@@ -98,8 +102,10 @@ void terrainProcess(){
 	f_viewVertex = viewVertex.xyz;
 	f_uv = uv.xyz ;
 
-	world_vertex = worldV.xyz;
-	world_normal = normalTex.rgb;
+	//world_vertex = worldV.xyz;
+	//world_normal = normalTex.rgb;
+	world_vertex = normalize(worldV.xyz) * 0.5 + 0.5;
+	world_normal = normalize(normalTex.rgb) * 0.5 + 0.5;
 
 	gl_Position = projMat * viewVertex ;
 }

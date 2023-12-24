@@ -301,6 +301,7 @@ void paintGL(){
 	m_airplane->render();
 	m_foliages->render();
 
+	glViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 	m_gbo->unbind();
 	m_gbo->use();
 	m_gbo->bindTexture();
