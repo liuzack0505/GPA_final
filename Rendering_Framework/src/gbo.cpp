@@ -18,6 +18,8 @@ void GBO::init(int w, int h) {
 	this->width = w;
 	this->height = h;
 
+	glEnable(GL_DEPTH_TEST);
+
 	// FrameBuffer
 	glGenFramebuffers(1, &this->gbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, this->gbo);
@@ -27,7 +29,6 @@ void GBO::init(int w, int h) {
 
 	for (int i = 0; i < GBO_NUM_TEXTURES; i++) {
 		glBindTexture(GL_TEXTURE_2D, this->texture[i]);
-
 		if (texType[i] != "DEPTH") {
 			if (texType[i] == "COORDS") {
 				glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA32F, w, h);
@@ -53,6 +54,11 @@ void GBO::init(int w, int h) {
 		}
 	}
 
+
+	// vao
+	glGenVertexArrays(1, &this->vao);
+	glBindVertexArray(this->vao);
+
 	// Draw Buffers
 	const int NUM_ATTACHMENTS = GBO_NUM_TEXTURES - 1;
 	GLenum attachments[NUM_ATTACHMENTS] = {};
@@ -69,6 +75,32 @@ void GBO::init(int w, int h) {
 	// Unbind the framebuffer
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+	Shader* vshader = new Shader(GL_VERTEX_SHADER);
+	vshader->createShaderFromFile("src/shader/oglVertexShader2.glsl");
+	cout << vshader->shaderInfoLog() << "\n";
+
+	Shader* fshader = new Shader(GL_FRAGMENT_SHADER);
+	fshader->createShaderFromFile("src/shader/oglFragmentShader2.glsl");
+	cout << fshader->shaderInfoLog() << "\n";
+
+	//create reset shader
+	this->deferShader = new ShaderProgram();
+	this->deferShader->init();
+	this->deferShader->attachShader(vshader);
+	this->deferShader->attachShader(fshader);
+	this->deferShader->checkStatus();
+	if (this->deferShader->status() != ShaderProgramStatus::READY) {
+		cout << "defer shader error\n";
+	}
+	this->deferShader->linkProgram();
+
+	vshader->releaseShader();
+	fshader->releaseShader();
+
+	delete vshader;
+	delete fshader;
 }
 
 void GBO::resize(int new_w, int new_h) {
@@ -83,8 +115,11 @@ void GBO::resize(int new_w, int new_h) {
 }
 
 void GBO::bindWrite() {
+	
 	glBindFramebuffer(GL_FRAMEBUFFER, this->gbo);
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -112,4 +147,25 @@ void GBO::release() {
 		glDeleteFramebuffers(1, &this->gbo);
 		this->gbo = 0;
 	}
+}
+
+void GBO::use() {
+	this->deferShader->useProgram();
+}
+
+void GBO::bindTexture() {
+	glDisable(GL_DEPTH_TEST);
+	for (int i = 0; i < GBO_NUM_TEXTURES; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, this->texture[i]);
+		//glUniform1i(uniforms.deferred.position_map, i);
+	}
+}
+
+void GBO::bindDrawBuffer() {
+	GLenum attachments[5] = {};
+	for (int i = 0; i < 5; i++) {
+		attachments[i] = GL_COLOR_ATTACHMENT0 + i;
+	}
+	glDrawBuffers(5, attachments);
 }

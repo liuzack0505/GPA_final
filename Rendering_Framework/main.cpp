@@ -9,6 +9,7 @@
 #include "src\MyMagicRock.h"
 #include "src\MyFoliages.h"
 #include "src\MyCameraManager.h"
+#include "src/gbo.h"
 
 // chou add
 #define STB_IMAGE_IMPLEMENTATION
@@ -50,6 +51,10 @@ void vsyncDisabled(GLFWwindow *window);
 // ==============================================
 SceneRenderer *defaultRenderer = nullptr;
 ShaderProgram* defaultShaderProgram = new ShaderProgram();
+
+GBO* m_gbo = new GBO(FRAME_WIDTH, FRAME_HEIGHT);
+
+//ShaderProgram* deferShaderProgram = new ShaderProgram();
 
 ViewFrustumSceneObject* m_viewFrustumSO = nullptr;
 MyTerrain* m_terrain = nullptr;
@@ -185,6 +190,8 @@ bool initializeGL(){
 		return false;
 	}
 
+	// init gbo
+	m_gbo->init();
 	// =================================================================
 	// initialize camera
 	m_myCameraManager = new INANOA::MyCameraManager();
@@ -269,7 +276,9 @@ void paintGL(){
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	
+
+	m_gbo->bindWrite();
+	m_gbo->bindDrawBuffer();
 	// start new frame
 	defaultRenderer->setViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 	defaultRenderer->startNewFrame(); //use normal shader
@@ -291,6 +300,12 @@ void paintGL(){
 	m_magicRock->render(magicRockNormalMapping);
 	m_airplane->render();
 	m_foliages->render();
+
+	m_gbo->unbind();
+	m_gbo->use();
+	m_gbo->bindTexture();
+	glBindVertexArray(m_gbo->vao);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	// ===============================
 
 	if (showContextMenu) {

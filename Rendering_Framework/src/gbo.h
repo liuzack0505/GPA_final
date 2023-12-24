@@ -6,6 +6,9 @@
 #include <glad\glad.h>
 #include <string>
 #include <iostream>
+#include "Shader.h"
+
+using namespace std;
 
 enum GBOTextureType {
 	GBO_TEXTURE_TYPE_VERTEX = 0,
@@ -40,8 +43,21 @@ public:
 	void setReadBuffer(GBOTextureType texType);
 	static void unbind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDrawBuffer(GL_BACK);
 	}
 
+	void use();
+	void bindTexture();
+
+	GLuint vao;
+
+	void bindDrawBuffer();
+
+	ShaderProgram* deferShader = nullptr;
 private:
 	void release();
+
+	
+
+	
 };
