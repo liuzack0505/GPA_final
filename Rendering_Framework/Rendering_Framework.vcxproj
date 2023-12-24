@@ -35,6 +35,7 @@
     <ClCompile Include="src\gbo.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\MyCameraManager.cpp" />
+    <ClCompile Include="src\MyFoliages.cpp" />
     <ClCompile Include="src\MyImGuiPanel.cpp" />
     <ClCompile Include="src\MyMagicRock.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="src\DynamicSceneObject.h" />
     <ClInclude Include="src\gbo.h" />
     <ClInclude Include="src\MyCameraManager.h" />
+    <ClInclude Include="src\MyFoliages.h" />
     <ClInclude Include="src\MyImGuiPanel.h" />
     <ClInclude Include="src\MyMagicRock.h" />
     <ClInclude Include="src\MyPoissonSample.h" />
@@ -73,9 +75,11 @@
     <ClInclude Include="src\ViewFrustumSceneObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\shader\computeShader.glsl" />
     <None Include="src\shader\oglFragmentShader.glsl" />
     <None Include="src\shader\oglFragmentShader2.glsl" />
     <None Include="src\shader\oglVertexShader.glsl" />
+    <None Include="src\shader\resetShader.glsl" />
     <None Include="src\shader\oglVertexShader2.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

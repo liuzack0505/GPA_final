@@ -13,6 +13,8 @@ layout(location = 4) uniform sampler2D albedoTexture ;
 layout(location = 6) uniform sampler2D normalMap ;
 layout(location = 10) uniform bool magicRockNormalMapping;
 
+uniform sampler2DArray TextureArray3D;
+
 const vec3 la = vec3(0.2);
 const vec3 ld = vec3(0.64);
 const vec3 ls = vec3(0.16);
@@ -35,8 +37,14 @@ vec4 withFog(vec4 color){
 void terrainPass(){
 	vec4 texel = texture(albedoTexture, f_uv.xy);
 	vec4 shadedColor = withFog(texel); 
+
+	vec3 ka = shadedColor.xyz;
+	vec3 kd = ka;
+
+	vec3 ambient = ka * la;
+	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
 	shadedColor.a = 1.0;	
-	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
 	fragColor.a = shadedColor.a;
 }
 
@@ -96,18 +104,38 @@ void airplanePass(){
 	fragColor.a = shadedColor.a;
 }
 
+void foliagesPass(){
+	vec4 texel = texture(TextureArray3D, f_uv);
+	if(texel.a < 0.5){
+		discard;
+	}
+	vec4 shadedColor = withFog(texel);
+
+	vec3 ka = shadedColor.xyz;
+	vec3 kd = ka;
+
+	vec3 ambient = ka * la;
+	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
+
+	fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
+	fragColor.a = shadedColor.a;
+}
+
 void main(){	
-	if(pixelProcessId == 5){
-		pureColor() ;
-	}
-	else if(pixelProcessId == 7){
-		terrainPass() ;
-	}
-	else if(pixelProcessId == 1){
+	if(pixelProcessId == 1){
 		magicRockPass();
 	}
 	else if (pixelProcessId == 2) {
 		airplanePass();
+	}
+	else if (pixelProcessId == 3) {
+		foliagesPass();
+	}
+	else if(pixelProcessId == 5){
+		pureColor() ;
+	}
+	else if(pixelProcessId == 7){
+		terrainPass() ;
 	}
 	else {
 		pureColor();
