@@ -23,6 +23,13 @@ public:
 
 	bool isNormalMapping();
 
+	bool isWorldVertex();
+	bool isWorldNormal();
+	bool isDiffuse();
+	bool isAmbient();
+	bool isSpecular();
+	bool isOriginal();
+
 private:
 	double m_avgFPS;
 	double m_avgFrameTime;
@@ -32,5 +39,12 @@ private:
 	bool m_button2Pressed = false;
 
 	bool m_normalMappingCheckBox = false;
+
+	bool m_worldVertex = false;
+	bool m_worldNormal = false;
+	bool m_diffuse = false;
+	bool m_ambient = false;
+	bool m_specular = false;
+	bool m_original = false;
 };
 

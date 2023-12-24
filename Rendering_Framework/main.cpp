@@ -43,6 +43,7 @@ double cursorPos[2];
 bool showContextMenu = false;
 
 bool magicRockNormalMapping = false;
+int deferMode = 0;
 
 MyImGuiPanel* m_imguiPanel = nullptr;
 
@@ -276,10 +277,13 @@ void paintGL(){
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-
-	m_gbo->bindWrite();
-	m_gbo->bindDrawBuffer();
+	if (deferMode != 0) {
+		m_gbo->bindWrite();
+		m_gbo->bindDrawBuffer();
+	}
+	
 	// start new frame
+	
 	defaultRenderer->setViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 	defaultRenderer->startNewFrame(); //use normal shader
 
@@ -301,12 +305,16 @@ void paintGL(){
 	m_airplane->render();
 	m_foliages->render();
 
-	glViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-	m_gbo->unbind();
-	m_gbo->use();
-	m_gbo->bindTexture();
-	glBindVertexArray(m_gbo->vao);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	if (deferMode != 0) {
+		glViewport(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		m_gbo->unbind();
+		m_gbo->use();
+		glUniform1i(11, deferMode);
+		m_gbo->bindTexture();
+		glBindVertexArray(m_gbo->vao);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	}
+	
 	// ===============================
 
 	if (showContextMenu) {
@@ -344,6 +352,30 @@ void paintGL(){
 	}
 	else {
 		magicRockNormalMapping = 0;
+	}
+	if (m_imguiPanel->isWorldVertex()) {
+		cout << "world_vertex\n";
+		deferMode = 1;
+	}
+	if (m_imguiPanel->isWorldNormal()) {
+		cout << "world_normal\n";
+		deferMode = 2;
+	}
+	if (m_imguiPanel->isDiffuse()) {
+		cout << "diffuse\n";
+		deferMode = 3;
+	}
+	if (m_imguiPanel->isAmbient()) {
+		cout << "ambient\n";
+		deferMode = 4;
+	}
+	if (m_imguiPanel->isSpecular()) {
+		cout << "specular\n";
+		deferMode = 5;
+	}
+	if (m_imguiPanel->isOriginal()) {
+		cout << "original\n";
+		deferMode = 0;
 	}
 	ImGui::End();
 
@@ -429,6 +461,7 @@ void resize(const int w, const int h) {
 
 	m_myCameraManager->resize(w, h);
 	defaultRenderer->resize(w, h);
+	m_gbo->resize(w, h);
 	updateWhenPlayerProjectionChanged(0.1, m_myCameraManager->playerCameraFar());
 }
 void viewFrustumMultiClipCorner(const std::vector<float> &depths, const glm::mat4 &viewMat, const glm::mat4 &projMat, float *clipCorner) {

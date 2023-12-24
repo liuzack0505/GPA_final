@@ -8,18 +8,18 @@ in vec3 N;
 in vec3 world_vertex;
 in vec3 world_normal;
 
-//layout (location = 0) out vec4 fragColor ;
+layout (location = 0) out vec4 fragColor ;
 // chou add
-layout (location = 0) out vec4 frag_position;
-layout (location = 1) out vec4 frag_normal ;
-layout (location = 2) out vec4 frag_diffuse;
-layout (location = 3) out vec4 frag_ambient;
-layout (location = 4) out vec4 frag_specular;
+layout (location = 1) out vec4 frag_position;
+layout (location = 2) out vec4 frag_normal ;
+layout (location = 3) out vec4 frag_diffuse;
+layout (location = 4) out vec4 frag_ambient;
+layout (location = 5) out vec4 frag_specular;
 // chou add end
 
 layout(location = 2) uniform int pixelProcessId;
 layout(location = 4) uniform sampler2D albedoTexture ;
-layout(location = 6) uniform sampler2D normalMap ;
+layout(location = 6) uniform sampler2D normalMap;
 layout(location = 10) uniform bool magicRockNormalMapping;
 
 uniform sampler2DArray TextureArray3D;
@@ -53,8 +53,8 @@ void terrainPass(){
 	vec3 ambient = ka * la;
 	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
 	shadedColor.a = 1.0;	
-	//fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
-	//fragColor.a = shadedColor.a;
+	fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
+	fragColor.a = shadedColor.a;
 
 	frag_position = vec4(world_vertex, 1.0);
 	frag_normal = vec4(world_normal, 1.0);
@@ -65,8 +65,8 @@ void terrainPass(){
 
 void pureColor(){
 	vec4 shadedColor = withFog(vec4(1.0, 0.0, 0.0, 1.0)) ;
-	//fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
-	//fragColor.a = shadedColor.a;
+	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.a = shadedColor.a;
 }
 
 void magicRockPass(){
@@ -93,8 +93,8 @@ void magicRockPass(){
 	vec4 shadedColor = withFog(sum4);
 
 	if (magicRockNormalMapping) {
-		//fragColor.rgb = pow(shadedColor_normalMapping.rgb, vec3(0.5));
-		//fragColor.a = shadedColor_normalMapping.a;
+		fragColor.rgb = pow(shadedColor_normalMapping.rgb, vec3(0.5));
+		fragColor.a = shadedColor_normalMapping.a;
 
 		frag_position = vec4(world_vertex, 1.0);
 		frag_normal = vec4(world_normal, 1.0);
@@ -103,8 +103,8 @@ void magicRockPass(){
 		frag_diffuse = vec4(kd, 1.0);
 	}
 	else {
-		//fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
-		//fragColor.a = shadedColor.a;
+		fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+		fragColor.a = shadedColor.a;
 
 		frag_position = vec4(world_vertex, 1.0);
 		frag_normal = vec4(world_normal, 1.0);
@@ -127,8 +127,8 @@ void airplanePass(){
 	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
 	vec3 specular =  pow(max(dot(N, H), 0.0), shiness) * ks * ls;
 
-	//fragColor.rgb = pow(ambient + diffuse + specular, vec3(0.5));
-	//fragColor.a = shadedColor.a;
+	fragColor.rgb = pow(ambient + diffuse + specular, vec3(0.5));
+	fragColor.a = shadedColor.a;
 
 	frag_position = vec4(world_vertex, 1.0);
 	frag_normal = vec4(world_normal, 1.0);
@@ -150,8 +150,8 @@ void foliagesPass(){
 	vec3 ambient = ka * la;
 	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
 
-	//fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
-	//fragColor.a = shadedColor.a;
+	fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
+	fragColor.a = shadedColor.a;
 
 	frag_position = vec4(world_vertex, 1.0);
 	frag_normal = vec4(world_normal, 1.0);

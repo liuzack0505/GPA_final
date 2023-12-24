@@ -57,6 +57,7 @@ public:
 
 	// chou add
 	GLuint m_magicRockNormalMapping;
+	GLuint m_deferMode;
 	// chou add end
 };
 

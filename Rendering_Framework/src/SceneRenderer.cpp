@@ -136,6 +136,7 @@ bool SceneRenderer::setUpShader(){
 
 	// chou add
 	manager->m_magicRockNormalMapping = 10;
+	manager->m_deferMode = 11;
 	// chou add end
 	
 	return true;

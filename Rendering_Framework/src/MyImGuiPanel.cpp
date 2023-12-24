@@ -42,6 +42,48 @@ void MyImGuiPanel::update() {
 	}
 
 	ImGui::Checkbox("Normal Mapping", &m_normalMappingCheckBox);
+
+	if (ImGui::Button("World Vertex")) {
+		this->m_worldVertex = true;
+	}
+	else {
+		this->m_worldVertex = false;
+	}
+
+	if (ImGui::Button("World Normal")) {
+		this->m_worldNormal = true;
+	}
+	else {
+		this->m_worldNormal = false;
+	}
+
+	if (ImGui::Button("Diffuse")) {
+		this->m_diffuse = true;
+	}
+	else {
+		this->m_diffuse = false;
+	}
+
+	if (ImGui::Button("Ambient")) {
+		this->m_ambient = true;
+	}
+	else {
+		this->m_ambient = false;
+	}
+
+	if (ImGui::Button("Specular")) {
+		this->m_specular = true;
+	}
+	else {
+		this->m_specular = false;
+	}
+
+	if (ImGui::Button("Original")) {
+		this->m_original = true;
+	}
+	else {
+		this->m_original = false;
+	}
 }
 
 bool MyImGuiPanel::isButton0Pressed() {
@@ -65,4 +107,28 @@ void MyImGuiPanel::setAvgFPS(const double avgFPS){
 }
 void MyImGuiPanel::setAvgFrameTime(const double avgFrameTime){
 	this->m_avgFrameTime = avgFrameTime;
+}
+
+bool MyImGuiPanel::isWorldVertex() {
+	return this->m_worldVertex;
+}
+
+bool MyImGuiPanel::isWorldNormal() {
+	return this->m_worldNormal;
+}
+
+bool MyImGuiPanel::isDiffuse() {
+	return this->m_diffuse;
+}
+
+bool MyImGuiPanel::isAmbient() {
+	return this->m_ambient;
+}
+
+bool MyImGuiPanel::isSpecular() {
+	return this->m_specular;
+}
+
+bool MyImGuiPanel::isOriginal() {
+	return this->m_original;
 }
