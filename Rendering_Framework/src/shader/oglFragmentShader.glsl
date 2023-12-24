@@ -37,8 +37,14 @@ vec4 withFog(vec4 color){
 void terrainPass(){
 	vec4 texel = texture(albedoTexture, f_uv.xy);
 	vec4 shadedColor = withFog(texel); 
+
+	vec3 ka = shadedColor.xyz;
+	vec3 kd = ka;
+
+	vec3 ambient = ka * la;
+	vec3 diffuse = max(dot(N, L), 0.0) * kd * ld;
 	shadedColor.a = 1.0;	
-	fragColor.rgb = pow(shadedColor.rgb, vec3(0.5));
+	fragColor.rgb = pow(ambient + diffuse, vec3(0.5));
 	fragColor.a = shadedColor.a;
 }
 

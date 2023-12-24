@@ -108,7 +108,7 @@ int main(){
 	ImGui_ImplOpenGL3_Init("#version 430");
 
 	// disable vsync
-	glfwSwapInterval(0);
+	//glfwSwapInterval(0);
 
 	// start game-loop
 	vsyncDisabled(window);

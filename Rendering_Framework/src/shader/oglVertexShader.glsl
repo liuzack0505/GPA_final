@@ -80,6 +80,12 @@ void terrainProcess(){
 	// transformation	
 	vec4 viewVertex = viewMat * worldV ;
 	vec4 viewNormal = viewMat * vec4(normalTex.rgb, 0) ;	
+
+	L = vec3(0.4, 0.5, 0.8);
+	L = normalize(L);
+	N = normalize(viewNormal.xyz);
+	vec3 V = -viewVertex.xyz;
+	H = normalize(L + V);
 	
 	f_viewVertex = viewVertex.xyz;
 	f_uv = uv.xyz ;
